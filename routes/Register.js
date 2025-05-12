@@ -47,7 +47,16 @@ router.post("/register", async (req, res) => {
     }));
 
     console.log("✅ Inserting into DB:", membersWithEvent);
-    await Member.insertMany(membersWithEvent);
+    for (const member of membersWithEvent) {
+  const existing = await Member.findOne({ email: member.email, event });
+  if (existing) {
+    return res.status(400).json({ 
+      message: `Member with email ${member.email} is already registered for ${event}` 
+    });
+  }
+}
+await Member.insertMany(membersWithEvent);
+
 
     res.status(201).json({ message: "Registration successful!" });
   } catch (error) {

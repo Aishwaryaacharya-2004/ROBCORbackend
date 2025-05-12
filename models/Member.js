@@ -19,8 +19,6 @@ const MemberSchema = new mongoose.Schema({
   transactionId: String,
 });
 
-// ✅ Correct compound indexes
-MemberSchema.index({ email: 1, event: 1 }, { unique: true });
-MemberSchema.index({ usn: 1, event: 1 }, { unique: true });
+// Removed the unique index to allow multiple registrations for the same email with different events.
 
 module.exports = mongoose.model("Member", MemberSchema);
