@@ -9,18 +9,13 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://robcor-frontend.onrender.com", 
-];
+const corsOptions = {
+  origin: 'https://www.robocor.corsit.in', // Allow only this domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // Allow cookies to be sent with requests
+};
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
