@@ -15,6 +15,7 @@ const MemberSchema = new mongoose.Schema({
     trim: true, 
     match: [/^\d{10}$/, "Phone number must be exactly 10 digits"]
   },
+  bgmiid:{type:String},
   event: { type: String, required: true, trim: true },
   transactionId: String,
 });

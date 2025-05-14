@@ -10,9 +10,9 @@ const eventRules = {
   "Neon Maze": { min: 1, max: 4 },
   "Project Conclave": { min: 1, max: 4 },
   "Cyber Kick": { min: 1, max: 4 },
-  "Nexus Quiz":{min:1,max:1},
+  "Nexus Quiz":{min:1,max:1},git 
   "Neon Run":{min:1,max:4},
-  "BGMI Punks":{min:1,max:4},
+  "BGMI Punks":{min:2,max:4},
 };
 
 router.post("/register", async (req, res) => {
