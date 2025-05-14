@@ -10,7 +10,7 @@ const eventRules = {
   "Neon Maze": { min: 1, max: 4 },
   "Project Conclave": { min: 1, max: 4 },
   "Cyber Kick": { min: 1, max: 4 },
-  "Nexus Quiz":{min:1,max:1},git 
+  "Nexus Quiz":{min:1,max:1},
   "Neon Run":{min:1,max:4},
   "BGMI Punks":{min:2,max:4},
 };
