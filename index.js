@@ -3,6 +3,7 @@ const connectDB = require("./database/config");
 const registerRoutes = require("./routes/Register");
 const transactionRoutes = require("./routes/payment");
 const certificateRoutes = require("./routes/certificateRoutes");
+const feedbackroute=require("./routes/feedback");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -42,6 +43,7 @@ connectDB()
     app.use("/api", registerRoutes);
     app.use("/api", transactionRoutes);
     app.use("/api/certificate", certificateRoutes);
+    app.use("/api/feedback", feedbackroute);
 
     // Start Server
     const PORT = process.env.PORT || 5000;
