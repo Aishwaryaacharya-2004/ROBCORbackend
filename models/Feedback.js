@@ -7,7 +7,8 @@ const FeedbackSchema = new mongoose.Schema({
     event: { type: String, required: true },
     answers: {
         q1: String,
-        q2: String
+        q2: String,
+        q3: String
     },
     submittedAt: {
         type: Date,
