@@ -32,7 +32,7 @@ router.post("/generate-certificate", async (req, res) => {
         doc.pipe(res);
 
         // 🖼️ Add background image
-        const bgPath = path.join(__dirname, "../certificate.jfif");
+        const bgPath = path.join(__dirname, "../certificate.png");
         if (fs.existsSync(bgPath)) {
             doc.image(bgPath, 0, 0, { width: 842, height: 595 });
         }
