@@ -37,7 +37,7 @@ router.post("/generate-certificate", async (req, res) => {
     const doc = new PDFDocument({ size: "A4", layout: "landscape" });
     doc.pipe(res);
 
-    const bgPath = path.join(__dirname, "../certificate.png");
+    const bgPath = path.join(__dirname, "../final.png");
     if (fs.existsSync(bgPath)) {
       doc.image(bgPath, 0, 0, { width: 842, height: 595 });
     }
