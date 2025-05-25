@@ -8,64 +8,58 @@ const router = express.Router();
 
 // 📄 Generate Certificate Route
 router.post("/generate-certificate", async (req, res) => {
-    const { Name, email, eventName } = req.body;
+  const { email, usn, event } = req.body;
 
-    if (!Name || !email || !eventName) {
-        return res.status(400).json({ error: "Name, Email, and Event Name are required." });
+  if (!event || (!email && !usn)) {
+    return res.status(400).json({ error: "Event and either Email or USN are required." });
+  }
+
+  try {
+    // Find user by either email or usn for the event
+    const query = { event };
+    if (email) query.email = email.trim().toLowerCase();
+    else if (usn) query.usn = usn.trim(); // Assuming USNs are stored in uppercase
+
+    const user = await Member.findOne(query);
+
+    if (!user) {
+      return res.status(404).json({
+        error: "No participant found for this event using provided Email or USN",
+      });
     }
 
-    try {
-        // 🔎 Check if email exists in the database
-        const user = await Member.findOne({ email });
-        console.log(user);
-        if (!user) {
-            return res.status(404).json({ error: "Email not found in the database" });
-        }
+    const memberName = user.name || "Participant";
+    const eventName = user.event || "a sub-event";
 
-        const memberName = user.name;
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename=${memberName}_certificate.pdf`);
 
-        // Set response headers for PDF download
-        res.setHeader("Content-Type", "application/pdf");
-        res.setHeader("Content-Disposition", `attachment; filename=${memberName}_${eventName}_certificate.pdf`);
+    const doc = new PDFDocument({ size: "A4", layout: "landscape" });
+    doc.pipe(res);
 
-        const doc = new PDFDocument({ size: "A4", layout: "landscape" });
-        doc.pipe(res);
-
-        // 🖼️ Add background image
-        const bgPath = path.join(__dirname, "../certificate.png");
-        if (fs.existsSync(bgPath)) {
-            doc.image(bgPath, 0, 0, { width: 842, height: 595 });
-        }
-
-        // 🏆 Certificate Title
-        doc.font("Helvetica-Bold").fontSize(36).fillColor("#2B2B52").text("Certificate of Participation", { align: "center", underline: true });
-
-        // 📌 Certification Text
-        doc.moveDown();
-        doc.fontSize(20).fillColor("black").text(`This is to certify that`, { align: "center" });
-
-        // ✍️ Participant Name
-        doc.moveDown();
-        doc.font("Helvetica-Bold").fontSize(30).fillColor("#D32F2F").text(memberName, { align: "center" });
-
-        // 📄 Event Details
-        doc.moveDown();
-        doc.font("Helvetica").fontSize(20).fillColor("black").text(`has successfully participated in`, { align: "center" });
-
-        doc.font("Helvetica-Bold").fontSize(24).fillColor("#00796B").text(eventName, { align: "center" });
-
-        // ✏️ Signatures & Date
-        doc.moveDown(3);
-        doc.fontSize(15).fillColor("black").text("_________________", 150, 450);
-        doc.text("Organizer", 180, 470);
-        doc.fontSize(15).text("_________________", 550, 450);
-        doc.text("Date", 600, 470);
-
-        doc.end();
-    } catch (error) {
-        console.error("❌ Error generating certificate:", error);
-        res.status(500).json({ error: "Internal server error" });
+    const bgPath = path.join(__dirname, "../certificate.png");
+    if (fs.existsSync(bgPath)) {
+      doc.image(bgPath, 0, 0, { width: 842, height: 595 });
     }
+
+    // Participant Name
+    doc.font("Helvetica-Bold")
+      .fontSize(26)
+      .fillColor("#290916")
+      .text(memberName, 200, 280, { align: "center", width: 442 });
+
+    // Event Name
+    doc.font("Helvetica-Bold")
+      .fontSize(22)
+      .fillColor("#290916")
+      .text(eventName, 200, 350, { align: "center", width: 442 });
+
+    doc.end();
+  } catch (error) {
+    console.error("❌ Error generating certificate:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
+
 
 module.exports = router;
