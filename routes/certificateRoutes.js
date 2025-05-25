@@ -45,13 +45,13 @@ router.post("/generate-certificate", async (req, res) => {
     // Participant Name
     doc.font("Helvetica-Bold")
       .fontSize(26)
-      .fillColor("#290916")
+      .fillColor("#008000")
       .text(memberName, 200, 280, { align: "center", width: 442 });
 
     // Event Name
     doc.font("Helvetica-Bold")
       .fontSize(22)
-      .fillColor("#290916")
+      .fillColor("#008000")
       .text(eventName, 200, 350, { align: "center", width: 442 });
 
     doc.end();
