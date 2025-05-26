@@ -28,7 +28,7 @@ router.post("/generate-certificate", async (req, res) => {
       });
     }
 
-    const memberName = user.name || "Participant";
+    const memberName = req.body.name?.trim() || user.name || "Participant";
     const eventName = user.event || "a sub-event";
 
     res.setHeader("Content-Type", "application/pdf");
