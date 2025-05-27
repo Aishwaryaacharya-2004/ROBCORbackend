@@ -7,7 +7,7 @@ const Member = require("../models/Member.js");
 const router = express.Router();
 
 // 📄 Generate Certificate Route
-router.post("/", async (req, res) => {
+router.post("/generate-certificate", async (req, res) => {
   const { email, usn, event } = req.body;
 
   if (!event || (!email && !usn)) {
