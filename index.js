@@ -10,7 +10,8 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-const allowedOrigins = ['https://www.robocor.corsit.in', 'http://localhost:3000','https://www.robocor.corsit.in/certificate'];
+
+const allowedOrigins = ['https://www.robocor.corsit.in', 'http://localhost:3000'];
 
 const corsOptions = {
   origin: function (origin, callback) {
@@ -20,12 +21,12 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
+  credentials: true
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // <-- Handle preflight
+app.options('*', cors(corsOptions)); // Handle preflight requests
+
 
 
 
