@@ -10,7 +10,7 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-const allowedOrigins = ['https://www.robocor.corsit.in', 'http://localhost:3000'];
+const allowedOrigins = ['https://www.robocor.corsit.in', 'http://localhost:3000','https://www.robocor.corsit.in/certificate'];
 
 const corsOptions = {
   origin: function (origin, callback) {
