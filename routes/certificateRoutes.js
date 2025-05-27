@@ -60,7 +60,7 @@ router.post("/generate-certificate", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-router.post("/generate-certificate", async (req, res) => {
+router.get("/generate-certificate", async (req, res) => {
   res.json({ success: true, message: "Certificate route works!" });
 });
 
